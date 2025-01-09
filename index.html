@@ -20,10 +20,14 @@
             <h4 id="clique">Clique para reproduzir um vídeo</h4>
             <div id="controles">
                 <div id="esquerda">
-                    <img src="img/volume.png" alt="" class="controle">
+                    <img src="img/volume.png" alt="" class="controle" id="volumeAlto">
+                    <img src="img/mudo.png" alt="" class="controle" id="mudo">
+                    <input type="range" id="volume" name="volume" min="0" max="100" value="50">
                 </div>
                 <div id="direita">
-                    <img src="img/play.png" alt="" class="controle">
+                    <img src="img/play.png" alt="" class="controle" id="play">
+                    <img src="img/pause.png" alt="" class="controle" id="pause" style="display: none;">
+
                 </div>
 
             </div>
@@ -31,6 +35,9 @@
     </div>
 
     <img src="img/logo branco.png" alt="" id="logo">
+
+
+    <script src="comportamento.js"></script>
 </body>
 
 </html>
