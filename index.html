@@ -14,31 +14,29 @@
     <div id="background">
         <div id="janela">
             <div id="reprodutorJanela">
-                <video src="" width="auto" height="450px">
-                </video>
+                <video src="" width="auto" height="450px" id="videoPlayer"></video>
             </div>
             <h4 id="clique">Clique para reproduzir um vídeo</h4>
+            <input type="file" id="videoInput" accept="video/*" style="display: none;">
+
             <div id="divProgresso">
                 <input type="range" id="progresso" name="progresso" min="0" max="100" value="0">
             </div>
             <div id="controles">
                 <div id="esquerda">
                     <img src="img/volume.png" alt="" class="controle" id="volumeAlto">
-                    <img src="img/mudo.png" alt="" class="controle" id="mudo">
+                    <img src="img/mudo.png" alt="" class="controle" id="mudo" style="display: none;">
                     <input type="range" id="volume" name="volume" min="0" max="100" value="50">
                 </div>
                 <div id="direita">
                     <img src="img/play.png" alt="" class="controle" id="play">
                     <img src="img/pause.png" alt="" class="controle" id="pause" style="display: none;">
-
                 </div>
-
             </div>
         </div>
     </div>
 
     <img src="img/logo branco.png" alt="" id="logo">
-
 
     <script src="comportamento.js"></script>
     <script src="./script.js"></script>

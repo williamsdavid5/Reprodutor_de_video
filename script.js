@@ -1,53 +1,67 @@
-const progress = document.getElementById('progresso');
-const volume = document.getElementById('volume');
+const videoPlayer = document.getElementById('videoPlayer');
+const videoInput = document.getElementById('videoInput');
+const cliqueText = document.getElementById('clique');
 
-const videoTags = document.getElementsByTagName("video")
-const videoPlayer = videoTags[0];
-
-let isPlayed = false;
-
-function load_video(url){
-    videoPlayer.src = url;
+function loadVideo(file) {
+    const fileURL = URL.createObjectURL(file);
+    videoPlayer.src = fileURL;
     videoPlayer.load();
+    videoPlayer.play();
+    togglePlayPauseButtons(true);
+    toggleCliqueText(false);
 }
 
-function playVideo(){
-    if(!isPlayed){
-        videoPlayer.play()
-        isPlayed = true
-    } else {}
+function togglePlayPauseButtons(isPlaying) {
+    if (isPlaying) {
+        playButton.style.display = 'none';
+        pauseButton.style.display = 'flex';
+    } else {
+        playButton.style.display = 'flex';
+        pauseButton.style.display = 'none';
+    }
 }
 
-function pauseVideo(){
-    if(isPlayed){
-        videoPlayer.pause()
-        isPlayed = false
-    } else {}
+function toggleCliqueText(show) {
+    cliqueText.style.display = show ? 'block' : 'none';
 }
 
-function getVideoDataEverySecond(){
-    const porcentagem = (videoPlayer.currentTime / videoPlayer.duration) * 100;
-    progress.value = porcentagem
-    volume.value = videoPlayer.volume * 100
-}
+playButton.addEventListener('click', () => {
+    videoPlayer.play();
+    togglePlayPauseButtons(true);
+    toggleCliqueText(false);
+});
 
-function setVideoTime(){
-    const newTime = (progress.value / 100) * videoPlayer.duration;
-    videoPlayer.currentTime = newTime
-}
+pauseButton.addEventListener('click', () => {
+    videoPlayer.pause();
+    togglePlayPauseButtons(false);
+    toggleCliqueText(true);
+});
 
-function setVideVolume(){
-    const newVolume = volume.value / 100;
-    videoPlayer.volume = newVolume
-}
+cliqueText.addEventListener('click', () => videoInput.click());
 
-document.getElementById('play').addEventListener('click', playVideo)
-document.getElementById('pause').addEventListener('click', pauseVideo)
+videoInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) loadVideo(file);
+});
 
-videoPlayer.addEventListener('timeupdate', getVideoDataEverySecond)
-progress.addEventListener('input', setVideoTime)
-volume.addEventListener('input', setVideVolume)
+videoPlayer.addEventListener('ended', () => {
+    togglePlayPauseButtons(false);
+    toggleCliqueText(true);
+});
 
-progress.value = 0;
-volume.value = 50
-load_video("video.mp4")
+const volumeBar = document.getElementById('volume');
+const progressBar = document.getElementById('progresso');
+
+volumeBar.addEventListener('input', () => {
+    videoPlayer.volume = volumeBar.value / 100;
+});
+
+videoPlayer.addEventListener('timeupdate', () => {
+    const progress = (videoPlayer.currentTime / videoPlayer.duration) * 100;
+    progressBar.value = progress || 0;
+});
+
+progressBar.addEventListener('input', () => {
+    videoPlayer.currentTime = (progressBar.value / 100) * videoPlayer.duration;
+});
+
